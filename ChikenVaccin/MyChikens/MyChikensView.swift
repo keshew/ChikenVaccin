@@ -257,6 +257,8 @@ struct MyChikensView: View {
                                     }
                                 }
                             }
+                            
+                            Color.clear.frame(height: 50)
                         }
                         .padding(.bottom)
                     }

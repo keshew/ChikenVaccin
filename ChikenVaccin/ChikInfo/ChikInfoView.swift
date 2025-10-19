@@ -163,6 +163,8 @@ struct ChikInfoView: View {
                             .padding(.horizontal)
                             .padding(.leading, 5)
                             .shadow(color: Color(red: 233/255, green: 145/255, blue: 79/255), radius: 0, x: -5)
+                        
+                        Color.clear.frame(height: 50)
                     }
                     .padding(.bottom)
                 }
