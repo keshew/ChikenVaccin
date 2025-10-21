@@ -16,7 +16,11 @@ struct ChickTasksView: View {
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
         ZStack {
-            Color(red: 217/255, green: 205/255, blue: 195/255).ignoresSafeArea()
+            if UserDefaults.standard.bool(forKey: "isOns") {
+                Color(red: 33/255, green: 34/255, blue: 36/255).ignoresSafeArea()
+            } else {
+                Color(red: 217/255, green: 205/255, blue: 195/255).ignoresSafeArea()
+            }
             
             VStack {
                 HStack {
@@ -26,7 +30,7 @@ struct ChickTasksView: View {
                     }) {
                         Image(systemName: "arrow.left")
                             .resizable()
-                            .foregroundStyle(Color(red: 126/255, green: 98/255, blue: 88/255))
+                            .foregroundStyle(UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 171/255, green: 181/255, blue: 210/255) : Color(red: 126/255, green: 98/255, blue: 88/255))
                             .frame(width: 20, height: 16)
                     }
                     .pressableButtonStyle()
@@ -45,8 +49,10 @@ struct ChickTasksView: View {
                         ForEach(chickTasksModel.tasks, id: \.id) { chick in
                             ZStack(alignment: .topTrailing) {
                                 Rectangle()
-                                    .fill(LinearGradient(colors: [Color(red: 243/255, green: 230/255, blue: 217/255),
-                                                                  Color(red: 230/255, green: 210/255, blue: 192/255)], startPoint: .top, endPoint: .bottom))
+                                    .fill(LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOns") ? [Color(red: 52/255, green: 63/255, blue: 97/255),
+                                                                                                                Color(red: 28/255, green: 38/255, blue: 69/255)] :  [Color(red: 210/255, green: 213/255, blue: 157/255),
+                                                                  Color(red: 204/255, green: 206/255, blue: 156/255),
+                                                                  Color(red: 193/255, green: 198/255, blue: 137/255)], startPoint: .top, endPoint: .bottom))
                                     .frame(height: chick.date != "" ? 200 : 160)
                                     .overlay {
                                         VStack(alignment: .leading) {
@@ -84,7 +90,7 @@ struct ChickTasksView: View {
                                             }
                                         
                                                 Rectangle()
-                                                    .fill(Color(red: 204/255, green: 188/255, blue: 174/255))
+                                                .fill(UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 27/255, green: 46/255, blue: 70/255) : Color(red: 204/255, green: 188/255, blue: 174/255))
                                                     .overlay {
                                                         HStack {
                                                             VStack(alignment: .leading, spacing: 0) {

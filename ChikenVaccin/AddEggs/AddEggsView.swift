@@ -30,7 +30,11 @@ struct AddEggsView: View {
 
     var body: some View {
         ZStack {
-            Color(red: 250/255, green: 229/255, blue: 196/255).ignoresSafeArea()
+            if UserDefaults.standard.bool(forKey: "isOns") {
+                Color(red: 51/255, green: 62/255, blue: 96/255).ignoresSafeArea()
+            } else {
+                Color(red: 217/255, green: 205/255, blue: 195/255).ignoresSafeArea()
+            }
             
             VStack {
                 HStack {
@@ -40,7 +44,7 @@ struct AddEggsView: View {
                     }) {
                         Image(systemName: "arrow.left")
                             .resizable()
-                            .foregroundStyle(Color(red: 126/255, green: 98/255, blue: 88/255))
+                            .foregroundStyle(UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 171/255, green: 181/255, blue: 210/255) : Color(red: 126/255, green: 98/255, blue: 88/255))
                             .frame(width: 20, height: 16)
                     }
                     .pressableButtonStyle()
@@ -75,7 +79,7 @@ struct AddEggsView: View {
                                         }) {
                                             ZStack {
                                                 Rectangle()
-                                                    .fill(showDateDropdown ? Color(red: 230/255, green: 218/255, blue: 208/255) : Color(red: 204/255, green: 188/255, blue: 174/255))
+                                                    .fill(showDateDropdown ? (UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 188/255, green: 199/255, blue: 238/255) : Color(red: 230/255, green: 218/255, blue: 208/255)) : (UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 171/255, green: 181/255, blue: 210/255) : Color(red: 204/255, green: 188/255, blue: 174/255)))
                                                     .frame(height: 36)
                                                     .cornerRadius(8)
                                                 
@@ -139,7 +143,7 @@ struct AddEggsView: View {
                                         }) {
                                             ZStack {
                                                 Rectangle()
-                                                    .fill(showChikDropdown ? Color(red: 230/255, green: 218/255, blue: 208/255) : Color(red: 204/255, green: 188/255, blue: 174/255))
+                                                    .fill(showChikDropdown ? (UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 188/255, green: 199/255, blue: 238/255) : Color(red: 230/255, green: 218/255, blue: 208/255)) : (UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 171/255, green: 181/255, blue: 210/255) : Color(red: 204/255, green: 188/255, blue: 174/255)))
                                                     .frame(height: 36)
                                                     .cornerRadius(8)
                                                 
@@ -201,8 +205,9 @@ struct AddEggsView: View {
                                 applyEggsUpdate()
                             }) {
                                 Rectangle()
-                                    .fill(LinearGradient(colors: [Color(red: 126/255, green: 98/255, blue: 88/255),
-                                                                 Color(red: 102/255, green: 74/255, blue: 65/255)], startPoint: .top, endPoint: .bottom))
+                                    .fill(LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOns") ? [Color(red: 139/255, green: 152/255, blue: 190/255),
+                                                                                                                Color(red: 111/255, green: 127/255, blue: 174/255)] : [Color(red: 126/255, green: 98/255, blue: 88/255),
+                                                                  Color(red: 102/255, green: 74/255, blue: 65/255)], startPoint: .top, endPoint: .bottom))
                                     .overlay {
                                         Text("Apply")
                                             .FontLight(size: 16, color: .white)

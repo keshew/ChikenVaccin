@@ -3,15 +3,14 @@ import SwiftUI
 struct ChikInfoView: View {
     @StateObject var chikInfoModel =  ChikInfoViewModel()
     @State var isShow = false
-    @State var isOn = false
-    @State var isNotifOn = false
-    @State var isVib = false
-    @State var isSounds = false
-    
     
     var body: some View {
         ZStack {
-            Color(red: 250/255, green: 229/255, blue: 196/255).ignoresSafeArea()
+            if UserDefaults.standard.bool(forKey: "isOns") {
+                Color(red: 33/255, green: 34/255, blue: 36/255).ignoresSafeArea()
+            } else {
+                Color(red: 250/255, green: 229/255, blue: 196/255).ignoresSafeArea()
+            }
             
             VStack {
                 HStack {
@@ -20,7 +19,7 @@ struct ChikInfoView: View {
                             isShow.toggle()
                         }
                     }) {
-                        Image(.settingsIcon)
+                        Image(UserDefaults.standard.bool(forKey: "isOns") ? "settingsDark" : "settingsIcon")
                             .resizable()
                             .frame(width: 20, height: 16)
                     }
@@ -38,8 +37,9 @@ struct ChikInfoView: View {
                 ScrollView(showsIndicators: false) {
                     VStack {
                         Rectangle()
-                            .fill(LinearGradient(colors: [Color(red: 223/255, green: 203/255, blue: 160/255),
-                                                          Color(red: 223/255, green: 189/255, blue: 148/255)], startPoint: .top, endPoint: .bottom))
+                            .fill(UserDefaults.standard.bool(forKey: "isOns") ? LinearGradient(colors: [Color(red: 30/255, green: 42/255, blue: 57/255).opacity(0.5),
+                                                                                                        Color(red: 29/255, green: 35/255, blue: 45/255).opacity(0.5)], startPoint: .top, endPoint: .bottom) : LinearGradient(colors: [Color(red: 223/255, green: 203/255, blue: 160/255),
+                                                                                                                                                                                                                                      Color(red: 223/255, green: 189/255, blue: 148/255)], startPoint: .top, endPoint: .bottom))
                             .frame(height: 330)
                             .overlay {
                                 VStack {
@@ -55,8 +55,9 @@ struct ChikInfoView: View {
                                     .padding(.top)
                                     
                                     Circle()
-                                        .fill(LinearGradient(colors: [Color(red: 230/255, green: 200/255, blue: 133/255),
-                                                                      Color(red: 233/255, green: 174/255, blue: 120/255)], startPoint: .top, endPoint: .bottom))
+                                        .fill(UserDefaults.standard.bool(forKey: "isOns") ? LinearGradient(colors: [Color(red: 29/255, green: 71/255, blue: 113/255).opacity(0.65),
+                                                                                                                    Color(red: 24/255, green: 28/255, blue: 82/255).opacity(0.65)], startPoint: .top, endPoint: .bottom) : LinearGradient(colors: [Color(red: 230/255, green: 200/255, blue: 133/255),
+                                                                                                                                                                                                                                                   Color(red: 233/255, green: 174/255, blue: 120/255)], startPoint: .top, endPoint: .bottom))
                                         .overlay {
                                             TwoRingProgressView(progress: 0.48)
                                         }
@@ -69,8 +70,9 @@ struct ChikInfoView: View {
                         
                         HStack {
                             Rectangle()
-                                .fill(LinearGradient(colors: [Color(red: 223/255, green: 203/255, blue: 160/255),
-                                                              Color(red: 223/255, green: 189/255, blue: 148/255)], startPoint: .top, endPoint: .bottom))
+                                .fill(UserDefaults.standard.bool(forKey: "isOns") ? LinearGradient(colors: [Color(red: 30/255, green: 42/255, blue: 57/255).opacity(0.5),
+                                                                                                            Color(red: 29/255, green: 35/255, blue: 45/255).opacity(0.5)], startPoint: .top, endPoint: .bottom) : LinearGradient(colors: [Color(red: 223/255, green: 203/255, blue: 160/255),
+                                                                                                                                                                                                                                          Color(red: 223/255, green: 189/255, blue: 148/255)], startPoint: .top, endPoint: .bottom))
                                 .frame(height: 100)
                                 .overlay {
                                     VStack(spacing: -10) {
@@ -84,8 +86,9 @@ struct ChikInfoView: View {
                                 .cornerRadius(15)
                             
                             Rectangle()
-                                .fill(LinearGradient(colors: [Color(red: 223/255, green: 203/255, blue: 160/255),
-                                                              Color(red: 223/255, green: 189/255, blue: 148/255)], startPoint: .top, endPoint: .bottom))
+                                .fill(UserDefaults.standard.bool(forKey: "isOns") ? LinearGradient(colors: [Color(red: 30/255, green: 42/255, blue: 57/255).opacity(0.5),
+                                                                                                            Color(red: 29/255, green: 35/255, blue: 45/255).opacity(0.5)], startPoint: .top, endPoint: .bottom) : LinearGradient(colors: [Color(red: 223/255, green: 203/255, blue: 160/255),
+                                                                                                                                                                                                                                          Color(red: 223/255, green: 189/255, blue: 148/255)], startPoint: .top, endPoint: .bottom))
                                 .frame(height: 100)
                                 .overlay {
                                     VStack(spacing: -10) {
@@ -99,8 +102,9 @@ struct ChikInfoView: View {
                                 .cornerRadius(15)
                             
                             Rectangle()
-                                .fill(LinearGradient(colors: [Color(red: 223/255, green: 203/255, blue: 160/255),
-                                                              Color(red: 223/255, green: 189/255, blue: 148/255)], startPoint: .top, endPoint: .bottom))
+                                .fill(UserDefaults.standard.bool(forKey: "isOns") ? LinearGradient(colors: [Color(red: 30/255, green: 42/255, blue: 57/255).opacity(0.5),
+                                                                                                            Color(red: 29/255, green: 35/255, blue: 45/255).opacity(0.5)], startPoint: .top, endPoint: .bottom) : LinearGradient(colors: [Color(red: 223/255, green: 203/255, blue: 160/255),
+                                                                                                                                                                                                                                          Color(red: 223/255, green: 189/255, blue: 148/255)], startPoint: .top, endPoint: .bottom))
                                 .frame(height: 100)
                                 .overlay {
                                     VStack(spacing: -10) {
@@ -183,8 +187,9 @@ struct ChikInfoView: View {
                 ScrollView(showsIndicators: false) {
                     VStack {
                         HStack {
-                            LinearGradient(colors: [Color(red: 247/255, green: 235/255, blue: 227/255),
-                                                    Color(red: 190/255, green: 177/255, blue: 167/255)], startPoint: .top, endPoint: .bottom)
+                            LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOns") ? [Color(red: 52/255, green: 63/255, blue: 97/255),
+                                                                                                  Color(red: 28/255, green: 38/255, blue: 69/255)] : [Color(red: 247/255, green: 235/255, blue: 227/255),
+                                                                                                                                                      Color(red: 190/255, green: 177/255, blue: 167/255)], startPoint: .top, endPoint: .bottom)
                             .frame(width: 350, height: 45)
                             .overlay {
                                 HStack {
@@ -199,7 +204,7 @@ struct ChikInfoView: View {
                                             isShow.toggle()
                                         }
                                     }) {
-                                        Image(.settingsIcon)
+                                        Image(UserDefaults.standard.bool(forKey: "isOns") ? "settingsDark" : "settingsIcon")
                                             .resizable()
                                             .scaleEffect(x: -1)
                                             .frame(width: 20, height: 16)
@@ -217,8 +222,9 @@ struct ChikInfoView: View {
                         }
                         
                         VStack {
-                            LinearGradient(colors: [Color(red: 247/255, green: 235/255, blue: 227/255),
-                                                    Color(red: 190/255, green: 177/255, blue: 167/255)], startPoint: .top, endPoint: .bottom)
+                            LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOns") ? [Color(red: 52/255, green: 63/255, blue: 97/255),
+                                                                                                  Color(red: 28/255, green: 38/255, blue: 69/255)] : [Color(red: 247/255, green: 235/255, blue: 227/255),
+                                                                                                                                                      Color(red: 190/255, green: 177/255, blue: 167/255)], startPoint: .top, endPoint: .bottom)
                             .frame(width: 350, height: 55)
                             .overlay {
                                 HStack {
@@ -228,16 +234,16 @@ struct ChikInfoView: View {
                                         .padding(.leading, 25)
                                     
                                     HStack {
-                                        Image(.sun2)
+                                        Image(UserDefaults.standard.bool(forKey: "isOns") ? "sunDark" : "sun2")
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: 16, height: 16)
                                         
-                                        Toggle("", isOn: $isOn)
+                                        Toggle("", isOn: $chikInfoModel.isOn)
                                             .toggleStyle(CustomToggleStyle())
                                             .frame(width: 48)
                                         
-                                        Image(.moon)
+                                        Image(UserDefaults.standard.bool(forKey: "isOns") ? "moonDark" : "moon")
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: 12, height: 16)
@@ -254,8 +260,9 @@ struct ChikInfoView: View {
                         }
                         
                         VStack {
-                            LinearGradient(colors: [Color(red: 247/255, green: 235/255, blue: 227/255),
-                                                    Color(red: 190/255, green: 177/255, blue: 167/255)], startPoint: .top, endPoint: .bottom)
+                            LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOns") ? [Color(red: 52/255, green: 63/255, blue: 97/255),
+                                                                                                  Color(red: 28/255, green: 38/255, blue: 69/255)] : [Color(red: 247/255, green: 235/255, blue: 227/255),
+                                                                                                                                                      Color(red: 190/255, green: 177/255, blue: 167/255)], startPoint: .top, endPoint: .bottom)
                             .frame(width: 350, height: 145)
                             .overlay {
                                 HStack(spacing: 20) {
@@ -278,16 +285,16 @@ struct ChikInfoView: View {
                                     
                                     VStack(spacing: 20) {
                                         HStack(spacing: 5) {
-                                            Image(.offIcn)
+                                            Image(UserDefaults.standard.bool(forKey: "isOns") ? "offDark" : "offIcn")
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .frame(width: 16, height: 16)
                                             
-                                            Toggle("", isOn: $isNotifOn)
+                                            Toggle("", isOn: $chikInfoModel.isNotifOn)
                                                 .toggleStyle(CustomToggleStyle())
                                                 .frame(width: 48)
                                             
-                                            Image(.onIcn)
+                                            Image(UserDefaults.standard.bool(forKey: "isOns") ? "onDark" : "onIcn")
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .frame(width: 16, height: 16)
@@ -295,16 +302,16 @@ struct ChikInfoView: View {
                                         }
                                         
                                         HStack(spacing: 5) {
-                                            Image(.offIcn)
+                                            Image(UserDefaults.standard.bool(forKey: "isOns") ? "offDark" : "offIcn")
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .frame(width: 16, height: 16)
                                             
-                                            Toggle("", isOn: $isVib)
+                                            Toggle("", isOn: $chikInfoModel.isVib)
                                                 .toggleStyle(CustomToggleStyle())
                                                 .frame(width: 48)
                                             
-                                            Image(.onIcn)
+                                            Image(UserDefaults.standard.bool(forKey: "isOns") ? "onDark" : "onIcn")
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .frame(width: 16, height: 16)
@@ -312,16 +319,16 @@ struct ChikInfoView: View {
                                         }
                                         
                                         HStack(spacing: 5) {
-                                            Image(.offIcn)
+                                            Image(UserDefaults.standard.bool(forKey: "isOns") ? "offDark" : "offIcn")
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .frame(width: 16, height: 16)
                                             
-                                            Toggle("", isOn: $isSounds)
+                                            Toggle("", isOn: $chikInfoModel.isSounds)
                                                 .toggleStyle(CustomToggleStyle())
                                                 .frame(width: 48)
                                             
-                                            Image(.onIcn)
+                                            Image(UserDefaults.standard.bool(forKey: "isOns") ? "onDark" : "onIcn")
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .frame(width: 16, height: 16)
@@ -356,11 +363,11 @@ struct CustomToggleStyle: ToggleStyle {
             configuration.label
             Spacer()
             RoundedRectangle(cornerRadius: 16)
-                .fill(configuration.isOn ? Color(red: 126/255, green: 98/255, blue: 88/255) : Color(red: 204/255, green: 188/255, blue: 174/255))
+                .fill(UserDefaults.standard.bool(forKey: "isOns") ? (configuration.isOn ? Color(red: 171/255, green: 181/255, blue: 210/255) : Color(red: 52/255, green: 63/255, blue: 97/255)) : (configuration.isOn ? Color(red: 126/255, green: 98/255, blue: 88/255) : Color(red: 204/255, green: 188/255, blue: 174/255)))
                 .frame(width: 48, height: 20)
                 .overlay(
                     Circle()
-                        .fill(configuration.isOn ? Color(red: 204/255, green: 188/255, blue: 174/255) : Color(red: 126/255, green: 98/255, blue: 88/255))
+                        .fill(UserDefaults.standard.bool(forKey: "isOns") ? (configuration.isOn ? Color(red: 52/255, green: 63/255, blue: 97/255) : Color(red: 171/255, green: 181/255, blue: 210/255)) : (configuration.isOn ? Color(red: 204/255, green: 188/255, blue: 174/255) : Color(red: 126/255, green: 98/255, blue: 88/255)))
                         .frame(width: 20, height: 20)
                         .offset(x: configuration.isOn ? 15 : -15)
                         .animation(.easeInOut, value: configuration.isOn)
@@ -392,7 +399,7 @@ struct TwoRingProgressView: View {
     var body: some View {
         ZStack {
             Circle()
-                .stroke(Color(red: 205/255, green: 153/255, blue: 100/255), lineWidth: 10)
+                .stroke(UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 19/255, green: 33/255, blue: 81/255) : Color(red: 205/255, green: 153/255, blue: 100/255), lineWidth: 10)
                 .frame(width: 200, height: 200)
             
             Circle()

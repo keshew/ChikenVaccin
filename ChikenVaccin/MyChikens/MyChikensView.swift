@@ -31,23 +31,22 @@ struct MyChikensView: View {
     var body: some View {
         ZStack {
             if myChikensModel.chicks.isEmpty {
-                LinearGradient(colors: [Color(red: 231/255, green: 211/255, blue: 195/255),
-                                        Color(red: 235/255, green: 200/255, blue: 173/255)], startPoint: .top, endPoint: .bottom).ignoresSafeArea()
+                if UserDefaults.standard.bool(forKey: "isOns") {
+                    Color(red: 33/255, green: 34/255, blue: 36/255).ignoresSafeArea()
+                } else {
+                    LinearGradient(colors: [Color(red: 231/255, green: 211/255, blue: 195/255),
+                                            Color(red: 235/255, green: 200/255, blue: 173/255)], startPoint: .top, endPoint: .bottom).ignoresSafeArea()
+                }
             } else {
-                Color(red: 217/255, green: 205/255, blue: 195/255).ignoresSafeArea()
+                if UserDefaults.standard.bool(forKey: "isOns") {
+                    Color(red: 33/255, green: 34/255, blue: 36/255).ignoresSafeArea()
+                } else {
+                    Color(red: 217/255, green: 205/255, blue: 195/255).ignoresSafeArea()
+                }
             }
             
             VStack {
                 HStack {
-                    Button(action: {
-                        
-                    }) {
-                        Image(.settingsIcon)
-                            .resizable()
-                            .frame(width: 20, height: 16)
-                    }
-                    .pressableButtonStyle()
-                    
                     Spacer()
                     
                     Text("My Chickens")
@@ -80,8 +79,9 @@ struct MyChikensView: View {
                             ForEach(myChikensModel.chicks, id: \.id) { chick in
                                 ZStack(alignment: .topTrailing) {
                                     Rectangle()
-                                        .fill(LinearGradient(colors: [Color(red: 243/255, green: 230/255, blue: 217/255),
-                                                                      Color(red: 230/255, green: 210/255, blue: 192/255)], startPoint: .top, endPoint: .bottom))
+                                        .fill(LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOns") ? [Color(red: 52/255, green: 63/255, blue: 97/255),
+                                                                                                                                   Color(red: 28/255, green: 38/255, blue: 69/255)] : [Color(red: 247/255, green: 235/255, blue: 227/255),
+                                                                                                                                                                                          Color(red: 190/255, green: 177/255, blue: 167/255)], startPoint: .top, endPoint: .bottom))
                                         .frame(height: 270)
                                         .overlay {
                                             VStack {
@@ -90,7 +90,7 @@ struct MyChikensView: View {
                                                         .resizable()
                                                         .frame(width: 30, height: 40)
                                                         .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
-                                                        .background(Color(red: 230/255, green: 212/255, blue: 197/255))
+                                                        .background(UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 20/255, green: 32/255, blue: 46/255) : Color(red: 230/255, green: 212/255, blue: 197/255))
                                                         .cornerRadius(8)
                                                     
                                                     VStack(alignment: .leading) {
@@ -125,9 +125,8 @@ struct MyChikensView: View {
                                                     HStack {
                                                         ZStack(alignment: .topLeading) {
                                                             Rectangle()
-                                                                .fill(LinearGradient(colors: [Color(red: 210/255, green: 213/255, blue: 157/255),
-                                                                                              Color(red: 204/255, green: 206/255, blue: 156/255),
-                                                                                              Color(red: 193/255, green: 198/255, blue: 137/255)], startPoint: .top, endPoint: .bottom))
+                                                                .fill(LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOns") ? [Color(red: 52/255, green: 63/255, blue: 97/255),
+                                                                                                                                            Color(red: 28/255, green: 38/255, blue: 69/255)] :  [Color(red: 204/255, green: 188/255, blue: 174/255)], startPoint: .top, endPoint: .bottom))
                                                                 .overlay {
                                                                     VStack(spacing: 0) {
                                                                         Text("Age")
@@ -153,9 +152,8 @@ struct MyChikensView: View {
                                                         
                                                         ZStack(alignment: .topLeading) {
                                                             Rectangle()
-                                                                .fill(LinearGradient(colors: [Color(red: 210/255, green: 213/255, blue: 157/255),
-                                                                                              Color(red: 204/255, green: 206/255, blue: 156/255),
-                                                                                              Color(red: 193/255, green: 198/255, blue: 137/255)], startPoint: .top, endPoint: .bottom))
+                                                                .fill(LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOns") ? [Color(red: 52/255, green: 63/255, blue: 97/255),
+                                                                                                                                            Color(red: 28/255, green: 38/255, blue: 69/255)] :  [Color(red: 204/255, green: 188/255, blue: 174/255)], startPoint: .top, endPoint: .bottom))
                                                                 .overlay {
                                                                     VStack(spacing: 0) {
                                                                         Text("Total Eggs")
@@ -185,9 +183,8 @@ struct MyChikensView: View {
                                                     HStack {
                                                         ZStack(alignment: .topLeading) {
                                                             Rectangle()
-                                                                .fill(LinearGradient(colors: [Color(red: 210/255, green: 213/255, blue: 157/255),
-                                                                                              Color(red: 204/255, green: 206/255, blue: 156/255),
-                                                                                              Color(red: 193/255, green: 198/255, blue: 137/255)], startPoint: .top, endPoint: .bottom))
+                                                                .fill(LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOns") ? [Color(red: 52/255, green: 63/255, blue: 97/255),
+                                                                                                                                            Color(red: 28/255, green: 38/255, blue: 69/255)] :  [Color(red: 204/255, green: 188/255, blue: 174/255)], startPoint: .top, endPoint: .bottom))
                                                                 .overlay {
                                                                     VStack(spacing: 0) {
                                                                         Text("This Week")
@@ -213,7 +210,8 @@ struct MyChikensView: View {
                                                         }
                                                         
                                                         Rectangle()
-                                                            .fill(chick.isHealthy ? LinearGradient(colors: [Color(red: 210/255, green: 213/255, blue: 157/255),
+                                                            .fill(chick.isHealthy ? LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOns") ? [Color(red: 52/255, green: 63/255, blue: 97/255),
+                                                                                                                                                          Color(red: 28/255, green: 38/255, blue: 69/255)] :  [Color(red: 210/255, green: 213/255, blue: 157/255),
                                                                                                             Color(red: 204/255, green: 206/255, blue: 156/255),
                                                                                                             Color(red: 193/255, green: 198/255, blue: 137/255)], startPoint: .top, endPoint: .bottom) : LinearGradient(colors: [Color(red: 220/255, green: 189/255, blue: 157/255),
                                                                                                                                                                                                                                 Color(red: 205/255, green: 164/255, blue: 138/255)], startPoint: .top, endPoint: .bottom))

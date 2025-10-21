@@ -72,11 +72,12 @@ struct CustomTabBar: View {
         ZStack(alignment: .bottom) {
             ZStack {
                 MyIcon()
-                    .fill(LinearGradient(colors: [Color(red: 243/255, green: 230/255, blue: 217/255),
+                    .fill(LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOns") ? [Color(red: 25/255, green: 26/255, blue: 27/255),
+                                                                                                Color(red: 38/255, green: 40/255, blue: 45/255)] : [Color(red: 243/255, green: 230/255, blue: 217/255),
                                                   Color(red: 230/255, green: 210/255, blue: 192/255)], startPoint: .top, endPoint: .bottom))
                     .frame(height: 100)
                     .offset(x: -10, y: 35)
-                    .shadow(color: .black.opacity(0.3), radius: 5, y: -5)
+                    .shadow(color: .black.opacity(UserDefaults.standard.bool(forKey: "isOns") ? 0 : 0.3), radius: 5, y: -5)
                     .ignoresSafeArea(edges: .bottom)
             }
             
@@ -119,12 +120,12 @@ struct TabBarItem: View {
                 VStack {
                     if tab == .Add {
                         ZStack {
-                            Image(isShow ? "\(imageName)Picked2" : imageName)
+                            Image(UserDefaults.standard.bool(forKey: "isOns") ? (isShow ? "\(imageName)PickedDark" : "\(imageName)Dark") : (isShow ? "\(imageName)Picked2" : imageName))
                                 .resizable()
                                 .frame(width: 40, height: 40)
                         }
                     } else {
-                        Image(selectedTab == tab ? "\(imageName)Picked" : imageName)
+                        Image(UserDefaults.standard.bool(forKey: "isOns") ? (selectedTab == tab ? "\(imageName)PickedDark" : "\(imageName)Dark") : (selectedTab == tab ? "\(imageName)Picked" : imageName))
                             .resizable()
                             .frame(width: tab == .Incubator ? 18 : 24, height: 24)
                     }
@@ -132,9 +133,11 @@ struct TabBarItem: View {
                     Text("\(tab)")
                         .FontRegular(
                             size: 12,
-                            color: selectedTab == tab
+                            color: UserDefaults.standard.bool(forKey: "isOns") ? (selectedTab == tab
+                                    ? Color(red: 171/255, green: 181/255, blue: 210/255)
+                                    : isShow ? Color(red: 171/255, green: 181/255, blue: 210/255) : Color(red: 51/255, green: 54/255, blue: 65/255)) : (selectedTab == tab
                             ? Color(red: 126/255, green: 98/255, blue: 88/255)
-                            : isShow ? Color(red: 126/255, green: 98/255, blue: 88/255) : Color(red: 204/255, green: 188/255, blue: 174/255)
+                            : isShow ? Color(red: 126/255, green: 98/255, blue: 88/255) : Color(red: 204/255, green: 188/255, blue: 174/255))
                         )
                         .offset(y: tab == .Add ? 13 : 0)
                 }
@@ -146,7 +149,7 @@ struct TabBarItem: View {
                             isEgg = true
                         }) {
                             HStack {
-                                Image(.tab3Picked)
+                                Image(UserDefaults.standard.bool(forKey: "isOns") ? "tab3Dark" : "tab3Picked")
                                     .resizable()
                                     .frame(width: 12, height: 16)
                                 
@@ -158,7 +161,7 @@ struct TabBarItem: View {
                         }
                         
                         Rectangle()
-                            .fill(Color(red: 204/255, green: 188/255, blue: 174/255))
+                            .fill(UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 52/255, green: 63/255, blue: 97/255) : Color(red: 204/255, green: 188/255, blue: 174/255))
                             .frame(height: 1)
                             .cornerRadius(2)
                         
@@ -166,7 +169,7 @@ struct TabBarItem: View {
                             isTask = true
                         }) {
                             HStack {
-                                Image(.tab4Picked)
+                                Image(UserDefaults.standard.bool(forKey: "isOns") ? "tab4Dark" : "tab4Picked")
                                     .resizable()
                                     .frame(width: 16, height: 16)
                                 
@@ -178,7 +181,7 @@ struct TabBarItem: View {
                         }
                         
                         Rectangle()
-                            .fill(Color(red: 204/255, green: 188/255, blue: 174/255))
+                            .fill(UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 52/255, green: 63/255, blue: 97/255) : Color(red: 204/255, green: 188/255, blue: 174/255))
                             .frame(height: 1)
                             .cornerRadius(2)
                         
@@ -186,7 +189,7 @@ struct TabBarItem: View {
                             isChik = true
                         }) {
                             HStack {
-                                Image(.tab2Picked)
+                                Image(UserDefaults.standard.bool(forKey: "isOns") ? "tab2Dark" : "tab2Picked")
                                     .resizable()
                                     .frame(width: 16, height: 16)
                                 
@@ -198,7 +201,7 @@ struct TabBarItem: View {
                         }
                         
                         Rectangle()
-                            .fill(Color(red: 204/255, green: 188/255, blue: 174/255))
+                            .fill(UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 52/255, green: 63/255, blue: 97/255) : Color(red: 204/255, green: 188/255, blue: 174/255))
                             .frame(height: 1)
                             .cornerRadius(2)
                         
@@ -206,7 +209,7 @@ struct TabBarItem: View {
                             isBatch = true
                         }) {
                             HStack {
-                                Image(.tab1Picked)
+                                Image(UserDefaults.standard.bool(forKey: "isOns") ? "tab1Dark" : "tab1Picked")
                                     .resizable()
                                     .frame(width: 14, height: 16)
                                 
@@ -218,7 +221,7 @@ struct TabBarItem: View {
                         }
                         
                         Rectangle()
-                            .fill(Color(red: 204/255, green: 188/255, blue: 174/255))
+                            .fill(UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 52/255, green: 63/255, blue: 97/255) : Color(red: 204/255, green: 188/255, blue: 174/255))
                             .frame(height: 1)
                             .cornerRadius(2)
                         
@@ -226,7 +229,7 @@ struct TabBarItem: View {
                             isVacc = true
                         }) {
                             HStack(spacing: 0) {
-                                Image(.vaccination)
+                                Image(UserDefaults.standard.bool(forKey: "isOns") ? "ukol" : "vaccination")
                                     .resizable()
                                     .frame(width: 12, height: 16)
                                 
@@ -238,7 +241,7 @@ struct TabBarItem: View {
                         }
                         
                         Rectangle()
-                            .fill(Color(red: 204/255, green: 188/255, blue: 174/255))
+                            .fill(UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 52/255, green: 63/255, blue: 97/255) : Color(red: 204/255, green: 188/255, blue: 174/255))
                             .frame(height: 1)
                             .cornerRadius(2)
                         
@@ -246,7 +249,7 @@ struct TabBarItem: View {
                             isMed = true
                         }) {
                             HStack {
-                                Image(.medice)
+                                Image(UserDefaults.standard.bool(forKey: "isOns") ? "medic" : "medice")
                                     .resizable()
                                     .frame(width: 14, height: 16)
                                 
@@ -258,7 +261,7 @@ struct TabBarItem: View {
                         }
                         
                         Rectangle()
-                            .fill(Color(red: 204/255, green: 188/255, blue: 174/255))
+                            .fill(UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 52/255, green: 63/255, blue: 97/255) : Color(red: 204/255, green: 188/255, blue: 174/255))
                             .frame(height: 1)
                             .cornerRadius(2)
                     }
@@ -266,7 +269,8 @@ struct TabBarItem: View {
                     .background(
                         Rectangle()
                             .fill(LinearGradient(
-                                colors: [Color(red: 247/255, green: 235/255, blue: 227/255),
+                                colors: UserDefaults.standard.bool(forKey: "isOns") ? [Color(red: 139/255, green: 152/255, blue: 190/255),
+                                                                                       Color(red: 111/255, green: 127/255, blue: 174/255)] : [Color(red: 247/255, green: 235/255, blue: 227/255),
                                          Color(red: 190/255, green: 177/255, blue: 167/255)],
                                 startPoint: .top, endPoint: .bottom))
                             .cornerRadius(8)

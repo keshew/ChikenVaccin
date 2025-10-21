@@ -69,21 +69,17 @@ struct ChikTasksView: View {
     
     var body: some View {
         ZStack {
-            Color(red: 221/255, green: 202/255, blue: 185/255).ignoresSafeArea()
+            if UserDefaults.standard.bool(forKey: "isOns") {
+                Color(red: 33/255, green: 34/255, blue: 36/255).ignoresSafeArea()
+            } else {
+                Color(red: 217/255, green: 205/255, blue: 195/255).ignoresSafeArea()
+            }
             
             GeometryReader { geometry in
                 ZStack(alignment: .bottom) {
                     ScrollView(showsIndicators: false) {
                         VStack(spacing: 10) {
                             HStack {
-                                Button(action: {
-                                    
-                                }) {
-                                    Image(.settingsIcon)
-                                        .resizable()
-                                        .frame(width: 20, height: 16)
-                                }
-                                .pressableButtonStyle()
                                 
                                 Spacer()
                                 
@@ -94,7 +90,7 @@ struct ChikTasksView: View {
                             .padding(.horizontal)
                             
                             Rectangle()
-                                .fill(Color(red: 238/255, green: 223/255, blue: 212/255))
+                                .fill(UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 52/255, green: 63/255, blue: 98/255) : Color(red: 238/255, green: 223/255, blue: 212/255))
                                 .frame(height: 28)
                                 .overlay(
                                     HStack(spacing: cellSpacing) {
@@ -103,7 +99,7 @@ struct ChikTasksView: View {
                                         let weekdaySymbol = calendar.shortWeekdaySymbols[calendar.component(.weekday, from: today)-1].uppercased()
                                         ForEach(["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"], id: \.self) { day in
                                             Text(day)
-                                                .FontBold(size: 12, color: day == weekdaySymbol ? Color(red: 126/255, green: 98/255, blue: 88/255) : Color(red: 204/255, green: 188/255, blue: 174/255))
+                                                .FontBold(size: 12, color: day == weekdaySymbol ? (UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 131/255, green: 44/255, blue: 214/255) : Color(red: 126/255, green: 98/255, blue: 88/255)) : (UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 171/255, green: 181/255, blue: 210/255) : Color(red: 204/255, green: 188/255, blue: 174/255)))
                                                 .frame(width: chikTaskModel.cellWidth(for: geometry.size.width, spacing: cellSpacing), height: 28)
                                                 .offset(y: 3)
                                         }
@@ -160,7 +156,7 @@ struct ChikTasksView: View {
                         VStack {
                             Capsule()
                                 .frame(width: 120, height: 6)
-                                .foregroundColor(Color(red: 236/255, green: 223/255, blue: 213/255))
+                                .foregroundColor(UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 11/255, green: 17/255, blue: 37/255) : Color(red: 236/255, green: 223/255, blue: 213/255))
                                 .padding(.top, 8)
                             
                             ScrollView(showsIndicators: false) {
@@ -182,7 +178,8 @@ struct ChikTasksView: View {
                                             }) {
                                                 VStack(spacing: 0) {
                                                     Rectangle()
-                                                        .fill(LinearGradient(colors: [Color(red: 204/255, green: 188/255, blue: 174/255),
+                                                        .fill(LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOns") ? [Color(red: 139/255, green: 152/255, blue: 190/255),
+                                                                                                                                    Color(red: 111/255, green: 127/255, blue: 174/255)] : [Color(red: 204/255, green: 188/255, blue: 174/255),
                                                                                       Color(red: 230/255, green: 210/255, blue: 192/255)], startPoint: .leading, endPoint: .trailing))
                                                         .clipShape(RoundedCorners(radius: 10, corners: [.topLeft, .topRight]))
                                                         .frame(height: 30)
@@ -198,7 +195,8 @@ struct ChikTasksView: View {
                                                         }
                                                     
                                                     Rectangle()
-                                                        .fill(LinearGradient(colors: [Color(red: 191/255, green: 175/255, blue: 160/255),
+                                                        .fill(LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOns") ? [Color(red: 52/255, green: 63/255, blue: 97/255),
+                                                                                                                                    Color(red: 28/255, green: 38/255, blue: 69/255)] : [Color(red: 191/255, green: 175/255, blue: 160/255),
                                                                                       Color(red: 226/255, green: 207/255, blue: 190/255)], startPoint: .leading, endPoint: .trailing))
                                                         .clipShape(RoundedCorners(radius: 10, corners: [.bottomLeft, .bottomRight]))
                                                         .frame(height: 50)
@@ -228,7 +226,8 @@ struct ChikTasksView: View {
                                             }) {
                                                 VStack(spacing: 0) {
                                                     Rectangle()
-                                                        .fill(LinearGradient(colors: [Color(red: 204/255, green: 188/255, blue: 174/255),
+                                                        .fill(LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOns") ? [Color(red: 139/255, green: 152/255, blue: 190/255),
+                                                                                                                                    Color(red: 111/255, green: 127/255, blue: 174/255)] : [Color(red: 204/255, green: 188/255, blue: 174/255),
                                                                                       Color(red: 230/255, green: 210/255, blue: 192/255)], startPoint: .leading, endPoint: .trailing))
                                                         .clipShape(RoundedCorners(radius: 10, corners: [.topLeft, .topRight]))
                                                         .frame(height: 30)
@@ -244,7 +243,8 @@ struct ChikTasksView: View {
                                                         }
                                                     
                                                     Rectangle()
-                                                        .fill(LinearGradient(colors: [Color(red: 191/255, green: 175/255, blue: 160/255),
+                                                        .fill(LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOns") ? [Color(red: 52/255, green: 63/255, blue: 97/255),
+                                                                                                                                    Color(red: 28/255, green: 38/255, blue: 69/255)] : [Color(red: 191/255, green: 175/255, blue: 160/255),
                                                                                       Color(red: 226/255, green: 207/255, blue: 190/255)], startPoint: .leading, endPoint: .trailing))
                                                         .clipShape(RoundedCorners(radius: 10, corners: [.bottomLeft, .bottomRight]))
                                                         .frame(height: 50)
@@ -274,7 +274,8 @@ struct ChikTasksView: View {
                                             }) {
                                                 VStack(spacing: 0) {
                                                     Rectangle()
-                                                        .fill(LinearGradient(colors: [Color(red: 204/255, green: 188/255, blue: 174/255),
+                                                        .fill(LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOns") ? [Color(red: 139/255, green: 152/255, blue: 190/255),
+                                                                                                                                    Color(red: 111/255, green: 127/255, blue: 174/255)] : [Color(red: 204/255, green: 188/255, blue: 174/255),
                                                                                       Color(red: 230/255, green: 210/255, blue: 192/255)], startPoint: .leading, endPoint: .trailing))
                                                         .clipShape(RoundedCorners(radius: 10, corners: [.topLeft, .topRight]))
                                                         .frame(height: 30)
@@ -290,7 +291,8 @@ struct ChikTasksView: View {
                                                         }
                                                     
                                                     Rectangle()
-                                                        .fill(LinearGradient(colors: [Color(red: 191/255, green: 175/255, blue: 160/255),
+                                                        .fill(LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOns") ? [Color(red: 52/255, green: 63/255, blue: 97/255),
+                                                                                                                                    Color(red: 28/255, green: 38/255, blue: 69/255)] : [Color(red: 191/255, green: 175/255, blue: 160/255),
                                                                                       Color(red: 226/255, green: 207/255, blue: 190/255)], startPoint: .leading, endPoint: .trailing))
                                                         .clipShape(RoundedCorners(radius: 10, corners: [.bottomLeft, .bottomRight]))
                                                         .frame(height: 50)
@@ -320,7 +322,8 @@ struct ChikTasksView: View {
                                             }) {
                                                 VStack(spacing: 0) {
                                                     Rectangle()
-                                                        .fill(LinearGradient(colors: [Color(red: 204/255, green: 188/255, blue: 174/255),
+                                                        .fill(LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOns") ? [Color(red: 139/255, green: 152/255, blue: 190/255),
+                                                                                                                                    Color(red: 111/255, green: 127/255, blue: 174/255)] : [Color(red: 204/255, green: 188/255, blue: 174/255),
                                                                                       Color(red: 230/255, green: 210/255, blue: 192/255)], startPoint: .leading, endPoint: .trailing))
                                                         .clipShape(RoundedCorners(radius: 10, corners: [.topLeft, .topRight]))
                                                         .frame(height: 30)
@@ -336,7 +339,8 @@ struct ChikTasksView: View {
                                                         }
                                                     
                                                     Rectangle()
-                                                        .fill(LinearGradient(colors: [Color(red: 191/255, green: 175/255, blue: 160/255),
+                                                        .fill(LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOns") ? [Color(red: 52/255, green: 63/255, blue: 97/255),
+                                                                                                                                    Color(red: 28/255, green: 38/255, blue: 69/255)] : [Color(red: 191/255, green: 175/255, blue: 160/255),
                                                                                       Color(red: 226/255, green: 207/255, blue: 190/255)], startPoint: .leading, endPoint: .trailing))
                                                         .clipShape(RoundedCorners(radius: 10, corners: [.bottomLeft, .bottomRight]))
                                                         .frame(height: 50)
@@ -366,7 +370,8 @@ struct ChikTasksView: View {
                                             }) {
                                                 VStack(spacing: 0) {
                                                     Rectangle()
-                                                        .fill(LinearGradient(colors: [Color(red: 204/255, green: 188/255, blue: 174/255),
+                                                        .fill(LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOns") ? [Color(red: 139/255, green: 152/255, blue: 190/255),
+                                                                                                                                    Color(red: 111/255, green: 127/255, blue: 174/255)] : [Color(red: 204/255, green: 188/255, blue: 174/255),
                                                                                       Color(red: 230/255, green: 210/255, blue: 192/255)], startPoint: .leading, endPoint: .trailing))
                                                         .clipShape(RoundedCorners(radius: 10, corners: [.topLeft, .topRight]))
                                                         .frame(height: 30)
@@ -382,7 +387,8 @@ struct ChikTasksView: View {
                                                         }
                                                     
                                                     Rectangle()
-                                                        .fill(LinearGradient(colors: [Color(red: 191/255, green: 175/255, blue: 160/255),
+                                                        .fill(LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOns") ? [Color(red: 52/255, green: 63/255, blue: 97/255),
+                                                                                                                                    Color(red: 28/255, green: 38/255, blue: 69/255)] : [Color(red: 191/255, green: 175/255, blue: 160/255),
                                                                                       Color(red: 226/255, green: 207/255, blue: 190/255)], startPoint: .leading, endPoint: .trailing))
                                                         .clipShape(RoundedCorners(radius: 10, corners: [.bottomLeft, .bottomRight]))
                                                         .frame(height: 50)
@@ -414,7 +420,8 @@ struct ChikTasksView: View {
                             }
                         }
                         .frame(width: geometry.size.width , height: maxHeight)
-                        .background(LinearGradient(colors: [Color(red: 247/255, green: 235/255, blue: 227/255),
+                        .background(LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOns") ? [Color(red: 52/255, green: 63/255, blue: 98/255),
+                                                                                                          Color(red: 20/255, green: 23/255, blue: 37/255)] : [Color(red: 247/255, green: 235/255, blue: 227/255),
                                                             Color(red: 190/255, green: 177/255, blue: 167/255)], startPoint: .top, endPoint: .bottom))
                         .cornerRadius(20)
                         .shadow(radius: 10)
@@ -484,8 +491,8 @@ struct ChikTasksView: View {
         } else {
             let isToday = Calendar.current.isDate(date, inSameDayAs: Date())
             return (
-                isToday ? Color(red: 204/255, green: 188/255, blue: 174/255) : Color(red: 238/255, green: 223/255, blue: 212/255),
-                isToday ? Color(red: 126/255, green: 98/255, blue: 88/255) : Color(red: 126/255, green: 98/255, blue: 88/255)
+                isToday ? (UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 52/255, green: 63/255, blue: 97/255) : Color(red: 204/255, green: 188/255, blue: 174/255)) : (UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 44/255, green: 49/255, blue: 62/255) : Color(red: 238/255, green: 223/255, blue: 212/255)),
+                isToday ? (UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 171/255, green: 181/255, blue: 210/255) : Color(red: 126/255, green: 98/255, blue: 88/255)) : (UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 171/255, green: 181/255, blue: 210/255) : Color(red: 126/255, green: 98/255, blue: 88/255))
             )
         }
     }
