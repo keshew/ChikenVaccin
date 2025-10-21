@@ -2,7 +2,13 @@ import SwiftUI
 
 struct ChikInfoView: View {
     @StateObject var chikInfoModel =  ChikInfoViewModel()
-
+    @State var isShow = false
+    @State var isOn = false
+    @State var isNotifOn = false
+    @State var isVib = false
+    @State var isSounds = false
+    
+    
     var body: some View {
         ZStack {
             Color(red: 250/255, green: 229/255, blue: 196/255).ignoresSafeArea()
@@ -10,7 +16,9 @@ struct ChikInfoView: View {
             VStack {
                 HStack {
                     Button(action: {
-                        
+                        withAnimation {
+                            isShow.toggle()
+                        }
                     }) {
                         Image(.settingsIcon)
                             .resizable()
@@ -32,7 +40,7 @@ struct ChikInfoView: View {
                         Rectangle()
                             .fill(LinearGradient(colors: [Color(red: 223/255, green: 203/255, blue: 160/255),
                                                           Color(red: 223/255, green: 189/255, blue: 148/255)], startPoint: .top, endPoint: .bottom))
-                            .frame(height: 360)
+                            .frame(height: 330)
                             .overlay {
                                 VStack {
                                     HStack {
@@ -42,7 +50,7 @@ struct ChikInfoView: View {
                                         
                                         Text("Good Morning!")
                                             .FontBold(size: 24)
-                                        .offset(y: 2)
+                                            .offset(y: 2)
                                     }
                                     .padding(.top)
                                     
@@ -66,7 +74,7 @@ struct ChikInfoView: View {
                                 .frame(height: 100)
                                 .overlay {
                                     VStack(spacing: -10) {
-                                        Text("18")
+                                        Text("\(chikInfoModel.totalEggs)")
                                             .FontExtraBold(size: 40)
                                         
                                         Text("Eggs Collection")
@@ -81,7 +89,7 @@ struct ChikInfoView: View {
                                 .frame(height: 100)
                                 .overlay {
                                     VStack(spacing: -10) {
-                                        Text("24")
+                                        Text("\(chikInfoModel.totalChicks)")
                                             .FontExtraBold(size: 40)
                                         
                                         Text("Total Chickens")
@@ -96,7 +104,7 @@ struct ChikInfoView: View {
                                 .frame(height: 100)
                                 .overlay {
                                     VStack(spacing: -10) {
-                                        Text("2")
+                                        Text("\(chikInfoModel.incubatingCount)")
                                             .FontExtraBold(size: 40)
                                         
                                         Text("Incubating")
@@ -120,10 +128,10 @@ struct ChikInfoView: View {
                                     
                                     VStack(alignment: .leading) {
                                         Text("Great production day!")
-                                            .FontBold(size: 18, color: Color(red: 102/255, green: 132/255, blue: 0/255))
+                                            .FontBold(size: 16, color: Color(red: 102/255, green: 132/255, blue: 0/255))
                                         
-                                        Text("Today you collected 10 more eggs than yesterday!")
-                                            .FontRegular(size: 12, color: Color(red: 102/255, green: 132/255, blue: 0/255))
+                                        Text("Remember to check on your chickens daily for their health and egg production.")
+                                            .FontRegular(size: 11, color: Color(red: 102/255, green: 132/255, blue: 0/255))
                                     }
                                     .padding(.leading, 5)
                                     
@@ -147,11 +155,11 @@ struct ChikInfoView: View {
                                         .frame(width: 34, height: 30)
                                     
                                     VStack(alignment: .leading) {
-                                        Text("Great production day!")
-                                            .FontBold(size: 18, color: Color(red: 159/255, green: 61/255, blue: 0/255))
+                                        Text("Vaccination")
+                                            .FontBold(size: 16, color: Color(red: 159/255, green: 61/255, blue: 0/255))
                                         
-                                        Text("Today you collected 10 more eggs than yesterday!")
-                                            .FontRegular(size: 12, color: Color(red: 159/255, green: 61/255, blue: 0/255))
+                                        Text("Track incubating batches to know when to expect new hatchlings.")
+                                            .FontRegular(size: 11, color: Color(red: 159/255, green: 61/255, blue: 0/255))
                                     }
                                     .padding(.leading, 5)
                                     
@@ -164,10 +172,175 @@ struct ChikInfoView: View {
                             .padding(.leading, 5)
                             .shadow(color: Color(red: 233/255, green: 145/255, blue: 79/255), radius: 0, x: -5)
                         
-                        Color.clear.frame(height: 50)
+                        Color.clear.frame(height: 55)
                     }
                     .padding(.bottom)
                 }
+            }
+            
+            if isShow {
+                Color.black.opacity(0.6).ignoresSafeArea()
+                ScrollView(showsIndicators: false) {
+                    VStack {
+                        HStack {
+                            LinearGradient(colors: [Color(red: 247/255, green: 235/255, blue: 227/255),
+                                                    Color(red: 190/255, green: 177/255, blue: 167/255)], startPoint: .top, endPoint: .bottom)
+                            .frame(width: 350, height: 45)
+                            .overlay {
+                                HStack {
+                                    Text("Settings")
+                                        .FontBold(size: 24)
+                                        .offset(y: 2)
+                                        .padding(.leading, 50)
+                                    Spacer()
+                                    
+                                    Button(action: {
+                                        withAnimation {
+                                            isShow.toggle()
+                                        }
+                                    }) {
+                                        Image(.settingsIcon)
+                                            .resizable()
+                                            .scaleEffect(x: -1)
+                                            .frame(width: 20, height: 16)
+                                    }
+                                    .pressableButtonStyle()
+                                    
+                                }
+                                .padding(.horizontal)
+                            }
+                            .clipShape(
+                                RoundedCorners(radius: 12, corners: [.topRight, .bottomRight])
+                            )
+                            
+                            Spacer()
+                        }
+                        
+                        VStack {
+                            LinearGradient(colors: [Color(red: 247/255, green: 235/255, blue: 227/255),
+                                                    Color(red: 190/255, green: 177/255, blue: 167/255)], startPoint: .top, endPoint: .bottom)
+                            .frame(width: 350, height: 55)
+                            .overlay {
+                                HStack {
+                                    Text("Theme")
+                                        .FontBold(size: 24)
+                                        .offset(y: 2)
+                                        .padding(.leading, 25)
+                                    
+                                    HStack {
+                                        Image(.sun2)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 16, height: 16)
+                                        
+                                        Toggle("", isOn: $isOn)
+                                            .toggleStyle(CustomToggleStyle())
+                                            .frame(width: 48)
+                                        
+                                        Image(.moon)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 12, height: 16)
+                                            .padding(.leading, 5)
+                                    }
+                                    .padding(.leading)
+                                    Spacer()
+                                }
+                                .padding(.horizontal)
+                            }
+                            .clipShape(
+                                RoundedCorners(radius: 12, corners: [.allCorners])
+                            )
+                        }
+                        
+                        VStack {
+                            LinearGradient(colors: [Color(red: 247/255, green: 235/255, blue: 227/255),
+                                                    Color(red: 190/255, green: 177/255, blue: 167/255)], startPoint: .top, endPoint: .bottom)
+                            .frame(width: 350, height: 145)
+                            .overlay {
+                                HStack(spacing: 20) {
+                                    VStack(alignment: .leading, spacing: 15) {
+                                        Text("Notifications")
+                                            .FontBold(size: 16)
+                                            .offset(y: 2)
+                                            .padding(.leading, 25)
+                                        
+                                        Text("Vibration")
+                                            .FontBold(size: 16)
+                                            .offset(y: 2)
+                                            .padding(.leading, 25)
+                                        
+                                        Text("Sounds")
+                                            .FontBold(size: 16)
+                                            .offset(y: 2)
+                                            .padding(.leading, 25)
+                                    }
+                                    
+                                    VStack(spacing: 20) {
+                                        HStack(spacing: 5) {
+                                            Image(.offIcn)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 16, height: 16)
+                                            
+                                            Toggle("", isOn: $isNotifOn)
+                                                .toggleStyle(CustomToggleStyle())
+                                                .frame(width: 48)
+                                            
+                                            Image(.onIcn)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 16, height: 16)
+                                                .padding(.leading, 10)
+                                        }
+                                        
+                                        HStack(spacing: 5) {
+                                            Image(.offIcn)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 16, height: 16)
+                                            
+                                            Toggle("", isOn: $isVib)
+                                                .toggleStyle(CustomToggleStyle())
+                                                .frame(width: 48)
+                                            
+                                            Image(.onIcn)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 16, height: 16)
+                                                .padding(.leading, 10)
+                                        }
+                                        
+                                        HStack(spacing: 5) {
+                                            Image(.offIcn)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 16, height: 16)
+                                            
+                                            Toggle("", isOn: $isSounds)
+                                                .toggleStyle(CustomToggleStyle())
+                                                .frame(width: 48)
+                                            
+                                            Image(.onIcn)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 16, height: 16)
+                                                .padding(.leading, 10)
+                                        }
+                                    }
+                                    
+                                    Spacer()
+                                }
+                                .padding(.horizontal)
+                            }
+                            .clipShape(
+                                RoundedCorners(radius: 12, corners: [.allCorners])
+                            )
+                        }
+                    }
+                    .padding(.top)
+                }
+                .transition(.move(edge: .leading))
             }
         }
     }
@@ -177,6 +350,42 @@ struct ChikInfoView: View {
     ChikInfoView()
 }
 
+struct CustomToggleStyle: ToggleStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        HStack {
+            configuration.label
+            Spacer()
+            RoundedRectangle(cornerRadius: 16)
+                .fill(configuration.isOn ? Color(red: 126/255, green: 98/255, blue: 88/255) : Color(red: 204/255, green: 188/255, blue: 174/255))
+                .frame(width: 48, height: 20)
+                .overlay(
+                    Circle()
+                        .fill(configuration.isOn ? Color(red: 204/255, green: 188/255, blue: 174/255) : Color(red: 126/255, green: 98/255, blue: 88/255))
+                        .frame(width: 20, height: 20)
+                        .offset(x: configuration.isOn ? 15 : -15)
+                        .animation(.easeInOut, value: configuration.isOn)
+                )
+                .onTapGesture {
+                    configuration.isOn.toggle()
+                }
+        }
+    }
+}
+
+struct RoundedCornersSecond: Shape {
+    var radius: CGFloat = 8
+    var corners: UIRectCorner = .allCorners
+    
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(
+            roundedRect: rect,
+            byRoundingCorners: corners,
+            cornerRadii: CGSize(width: radius, height: radius)
+        )
+        return Path(path.cgPath)
+    }
+}
+
 struct TwoRingProgressView: View {
     var progress: Double
     
@@ -184,7 +393,7 @@ struct TwoRingProgressView: View {
         ZStack {
             Circle()
                 .stroke(Color(red: 205/255, green: 153/255, blue: 100/255), lineWidth: 10)
-                .frame(width: 220, height: 220)
+                .frame(width: 200, height: 200)
             
             Circle()
                 .trim(from: 0, to: CGFloat(progress))
@@ -200,13 +409,13 @@ struct TwoRingProgressView: View {
                     style: StrokeStyle(lineWidth: 10, lineCap: .round)
                 )
                 .rotationEffect(Angle(degrees: -90))
-                .frame(width: 220, height: 220)
+                .frame(width: 200, height: 200)
             
             VStack(spacing: 0) {
                 Image(.chikHappy)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 60, height: 80)
+                    .frame(width: 50, height: 70)
                 
                 Text("Happy!")
                     .FontBold(size: 35, color: Color(red: 185/255, green: 255/255, blue: 73/255))

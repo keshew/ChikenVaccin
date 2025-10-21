@@ -4,7 +4,11 @@ import SwiftUI
 struct ChikenVaccinApp: App {
     var body: some Scene {
         WindowGroup {
-            ChikInfoView()
+            ChikTabBarView()
+                .onAppear {
+                    UserDefaultsManager.shared.checkAndUpdateChicksStatus()
+                    UserDefaultsManager.shared.decreaseStockIfNeeded()
+                }
         }
     }
 }

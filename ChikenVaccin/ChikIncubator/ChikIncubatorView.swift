@@ -2,10 +2,11 @@ import SwiftUI
 
 struct ChikIncubatorView: View {
     @StateObject var chikIncubatorModel =  ChikIncubatorViewModel()
-    @State private var showMenu = false
+    @State private var menusShown = [UUID: Bool]()
+    
     var body: some View {
         ZStack {
-            if 1 != 1 {
+            if chikIncubatorModel.batch.isEmpty {
                 LinearGradient(colors: [Color(red: 231/255, green: 211/255, blue: 195/255),
                                         Color(red: 235/255, green: 200/255, blue: 173/255)], startPoint: .top, endPoint: .bottom).ignoresSafeArea()
             } else {
@@ -32,7 +33,7 @@ struct ChikIncubatorView: View {
                 .padding(.horizontal)
                 .padding(.top)
                 
-                if 1 != 1 {
+                if chikIncubatorModel.batch.isEmpty{
                     Spacer()
                     
                     VStack(spacing: 23) {
@@ -51,7 +52,7 @@ struct ChikIncubatorView: View {
                 } else {
                     ScrollView(showsIndicators: false) {
                         VStack(spacing: 15) {
-                            ForEach(0..<3, id: \.self) { index in
+                            ForEach(chikIncubatorModel.batch, id: \.id) { index in
                                 ZStack(alignment: .topTrailing) {
                                     Rectangle()
                                         .fill(LinearGradient(colors: [Color(red: 243/255, green: 230/255, blue: 217/255),
@@ -68,26 +69,26 @@ struct ChikIncubatorView: View {
                                                         .cornerRadius(8)
                                                     
                                                     VStack(alignment: .leading) {
-                                                        Text("Batch \(index + 1)")
+                                                        Text("")
                                                             .FontRegular(size: 18)
                                                         
-                                                        Text("12 eggs incubating")
+                                                        Text("\(index.totalEggs) eggs incubating")
                                                             .FontRegular(size: 14)
                                                     }
                                                     .padding(.leading, 5)
                                                     
                                                     Spacer()
                                                     
-                                                    Text(1 == 1 ? "Active" : "Hatching")
+                                                    Text(index.currentDay < 17 ? "Active" : "Hatching")
                                                         .FontRegular(size: 12, color: .white)
                                                         .padding(EdgeInsets(top: 3, leading: 25, bottom: 3, trailing: 25))
-                                                        .background(1 == 1 ? Color(red: 155/255, green: 207/255, blue: 57/255) : Color(red: 233/255, green: 145/255, blue: 79/255))
+                                                        .background(index.currentDay < 17 ? Color(red: 155/255, green: 207/255, blue: 57/255) : Color(red: 233/255, green: 145/255, blue: 79/255))
                                                         .cornerRadius(18)
                                                         .padding(.trailing, 10)
                                                     
                                                     Button(action: {
                                                         withAnimation {
-                                                            showMenu.toggle()
+                                                            menusShown[index.id] = !(menusShown[index.id] ?? false)
                                                         }
                                                     }) {
                                                         Image("edit")
@@ -108,7 +109,7 @@ struct ChikIncubatorView: View {
                                                                         
                                                                         Spacer()
                                                                         
-                                                                        Text("Day 13 of 21")
+                                                                        Text("Day \(index.currentDay) of 21")
                                                                             .FontLight(size: 10)
                                                                     }
                                                                     
@@ -117,17 +118,18 @@ struct ChikIncubatorView: View {
                                                                             .fill(Color(red: 215/255, green: 198/255, blue: 182/255))
                                                                             .frame(width: 300, height: 8)
                                                                             .cornerRadius(10)
-                                                                        
+
                                                                         Rectangle()
                                                                             .fill(LinearGradient(colors: [Color(red: 200/255, green: 232/255, blue: 67/255),
-                                                                                                          Color(red: 174/255, green: 212/255, blue: 72/255),
-                                                                                                          Color(red: 138/255, green: 179/255, blue: 4/255)], startPoint: .leading, endPoint: .trailing))
-                                                                            .frame(width: 200, height: 8)
+                                                                                                         Color(red: 174/255, green: 212/255, blue: 72/255),
+                                                                                                         Color(red: 138/255, green: 179/255, blue: 4/255)],
+                                                                                                 startPoint: .leading, endPoint: .trailing))
+                                                                            .frame(width: 300 * progressPercent(currentDay: Int(index.currentDay)), height: 8)
                                                                             .cornerRadius(10)
                                                                     }
                                                                     
                                                                     HStack(spacing: 5) {
-                                                                        Text("8")
+                                                                        Text("\(daysLeft(currentDay: index.currentDay))")
                                                                             .FontSemiBold(size: 18, color: Color(red: 102/255, green: 132/255, blue: 0/255))
                                                                         
                                                                         Text("days left")
@@ -149,7 +151,7 @@ struct ChikIncubatorView: View {
                                                                     Text("Temperature")
                                                                         .FontRegular(size: 10)
                                                                     
-                                                                    Text("37.5 C")
+                                                                    Text("\(index.temperature)C")
                                                                         .FontExtraBold(size: 28)
                                                                 }
                                                                 .offset(y: 5)
@@ -164,7 +166,7 @@ struct ChikIncubatorView: View {
                                                                     Text("Humidity")
                                                                         .FontRegular(size: 10)
                                                                     
-                                                                    Text("55%")
+                                                                    Text("\(Int(progressPercent(currentDay: Int(index.currentDay)) * 100))%")
                                                                         .FontExtraBold(size: 28)
                                                                 }
                                                                 .offset(y: 5)
@@ -176,7 +178,7 @@ struct ChikIncubatorView: View {
                                                     Text("Expected Hatch Date")
                                                         .FontLight(size: 10)
                                                     
-                                                    Text("02.05.2024")
+                                                    Text(expectedHatchDate(startDateString: index.expectedHatchData))
                                                         .FontExtraBold(size: 12)
                                                 }
                                             }
@@ -185,25 +187,16 @@ struct ChikIncubatorView: View {
                                         .cornerRadius(15)
                                         .padding(.horizontal)
                                         .padding(.leading, 5)
-                                        .shadow(color: 1 == 1 ? Color(red: 155/255, green: 207/255, blue: 57/255) : Color(red: 233/255, green: 145/255, blue: 79/255), radius: 0, x: -5)
+                                        .shadow(color: index.currentDay < 17 ? Color(red: 155/255, green: 207/255, blue: 57/255) : Color(red: 233/255, green: 145/255, blue: 79/255), radius: 0, x: -5)
                                     
                                     Group {
-                                        if showMenu {
+                                        if menusShown[index.id] == true {
                                             VStack(alignment: .trailing, spacing: 5) {
                                                 Button(action: {
-                                                    
-                                                }) {
-                                                    Text("Edit")
-                                                        .FontLight(size: 12)
-                                                }
-                                                
-                                                Rectangle()
-                                                    .fill(Color(red: 204/255, green: 188/255, blue: 174/255))
-                                                    .frame(height: 1)
-                                                    .cornerRadius(2)
-                                                
-                                                Button(action: {
-                                                    
+                                                    withAnimation {
+                                                        UserDefaultsManager().deleteBatch(index)
+                                                        chikIncubatorModel.loadBatches()
+                                                    }
                                                 }) {
                                                     Text("Delete")
                                                         .FontLight(size: 12)
@@ -233,6 +226,25 @@ struct ChikIncubatorView: View {
                 }
             }
         }
+    }
+    
+    func expectedHatchDate(startDateString: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM.dd.yyyy"
+        guard let startDate = formatter.date(from: startDateString) else { return "" }
+        
+        if let hatchDate = Calendar.current.date(byAdding: .day, value: 21, to: startDate) {
+            return formatter.string(from: hatchDate)
+        }
+        return ""
+    }
+    
+    func progressPercent(currentDay: Int) -> Double {
+        return min(Double(currentDay) / 21.0, 1.0)
+    }
+    
+    func daysLeft(currentDay: Int) -> Int {
+        return max(21 - currentDay, 0)
     }
 }
 

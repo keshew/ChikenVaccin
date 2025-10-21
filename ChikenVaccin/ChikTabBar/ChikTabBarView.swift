@@ -80,7 +80,7 @@ struct CustomTabBar: View {
                     .ignoresSafeArea(edges: .bottom)
             }
             
-            HStack(spacing: 42) {
+            HStack(spacing: UIScreen.main.bounds.width > 900 ? 175 : UIScreen.main.bounds.width > 750 ? 135 : UIScreen.main.bounds.width > 720 ? 115 : UIScreen.main.bounds.width > 410 ? 50 : 42) {
                 TabBarItem(imageName: "tab1", tab: .Info, selectedTab: $selectedTab)
                 TabBarItem(imageName: "tab2", tab: .Chickens, selectedTab: $selectedTab)
                 TabBarItem(imageName: "tab3", tab: .Incubator, selectedTab: $selectedTab)
@@ -97,11 +97,20 @@ struct TabBarItem: View {
     let imageName: String
     let tab: CustomTabBar.TabType
     @Binding var selectedTab: CustomTabBar.TabType
+    @State var isShow = false
+    @State var isEgg = false
+    @State var isTask = false
+    @State var isChik = false
+    @State var isBatch = false
+    @State var isVacc = false
+    @State var isMed = false
     
     var body: some View {
         Button(action: {
             if tab == .Add {
-                
+                withAnimation {
+                    isShow.toggle()
+                }
             } else {
                 selectedTab = tab
             }
@@ -110,7 +119,7 @@ struct TabBarItem: View {
                 VStack {
                     if tab == .Add {
                         ZStack {
-                            Image(selectedTab == tab ? "\(imageName)Picked" : imageName)
+                            Image(isShow ? "\(imageName)Picked2" : imageName)
                                 .resizable()
                                 .frame(width: 40, height: 40)
                         }
@@ -125,12 +134,168 @@ struct TabBarItem: View {
                             size: 12,
                             color: selectedTab == tab
                             ? Color(red: 126/255, green: 98/255, blue: 88/255)
-                            : Color(red: 204/255, green: 188/255, blue: 174/255)
+                            : isShow ? Color(red: 126/255, green: 98/255, blue: 88/255) : Color(red: 204/255, green: 188/255, blue: 174/255)
                         )
                         .offset(y: tab == .Add ? 13 : 0)
                 }
             }
+            .overlay {
+                if tab == .Add && isShow {
+                    VStack(alignment: .trailing, spacing: 5) {
+                        Button(action: {
+                            isEgg = true
+                        }) {
+                            HStack {
+                                Image(.tab3Picked)
+                                    .resizable()
+                                    .frame(width: 12, height: 16)
+                                
+                                Spacer()
+                                
+                                Text("Eggs")
+                                    .FontLight(size: 12)
+                            }
+                        }
+                        
+                        Rectangle()
+                            .fill(Color(red: 204/255, green: 188/255, blue: 174/255))
+                            .frame(height: 1)
+                            .cornerRadius(2)
+                        
+                        Button(action: {
+                            isTask = true
+                        }) {
+                            HStack {
+                                Image(.tab4Picked)
+                                    .resizable()
+                                    .frame(width: 16, height: 16)
+                                
+                                Spacer()
+                                
+                                Text("Task")
+                                    .FontLight(size: 12)
+                            }
+                        }
+                        
+                        Rectangle()
+                            .fill(Color(red: 204/255, green: 188/255, blue: 174/255))
+                            .frame(height: 1)
+                            .cornerRadius(2)
+                        
+                        Button(action: {
+                            isChik = true
+                        }) {
+                            HStack {
+                                Image(.tab2Picked)
+                                    .resizable()
+                                    .frame(width: 16, height: 16)
+                                
+                                Spacer()
+                                
+                                Text("Chiken")
+                                    .FontLight(size: 12)
+                            }
+                        }
+                        
+                        Rectangle()
+                            .fill(Color(red: 204/255, green: 188/255, blue: 174/255))
+                            .frame(height: 1)
+                            .cornerRadius(2)
+                        
+                        Button(action: {
+                            isBatch = true
+                        }) {
+                            HStack {
+                                Image(.tab1Picked)
+                                    .resizable()
+                                    .frame(width: 14, height: 16)
+                                
+                                Spacer()
+                                
+                                Text("Batch")
+                                    .FontLight(size: 12)
+                            }
+                        }
+                        
+                        Rectangle()
+                            .fill(Color(red: 204/255, green: 188/255, blue: 174/255))
+                            .frame(height: 1)
+                            .cornerRadius(2)
+                        
+                        Button(action: {
+                            isVacc = true
+                        }) {
+                            HStack(spacing: 0) {
+                                Image(.vaccination)
+                                    .resizable()
+                                    .frame(width: 12, height: 16)
+                                
+                                Spacer()
+                                
+                                Text("Vaccination")
+                                    .FontLight(size: 8)
+                            }
+                        }
+                        
+                        Rectangle()
+                            .fill(Color(red: 204/255, green: 188/255, blue: 174/255))
+                            .frame(height: 1)
+                            .cornerRadius(2)
+                        
+                        Button(action: {
+                            isMed = true
+                        }) {
+                            HStack {
+                                Image(.medice)
+                                    .resizable()
+                                    .frame(width: 14, height: 16)
+                                
+                                Spacer()
+                                
+                                Text("Medicine")
+                                    .FontLight(size: 10)
+                            }
+                        }
+                        
+                        Rectangle()
+                            .fill(Color(red: 204/255, green: 188/255, blue: 174/255))
+                            .frame(height: 1)
+                            .cornerRadius(2)
+                    }
+                    .padding(EdgeInsets(top: 8, leading: 10, bottom: 10, trailing: 10))
+                    .background(
+                        Rectangle()
+                            .fill(LinearGradient(
+                                colors: [Color(red: 247/255, green: 235/255, blue: 227/255),
+                                         Color(red: 190/255, green: 177/255, blue: 167/255)],
+                                startPoint: .top, endPoint: .bottom))
+                            .cornerRadius(8)
+                            .shadow(radius: 5, y: 3)
+                    )
+                    .frame(width: 80)
+                    .offset(x: -20, y: -140)
+                }
+            }
         }
         .offset(y: tab == .Add ? -20 : 0)
+        .pressableButtonStyle()
+        .fullScreenCover(isPresented: $isEgg) {
+            AddEggsView()
+        }
+        .fullScreenCover(isPresented: $isTask) {
+            AddTaskView()
+        }
+        .fullScreenCover(isPresented: $isChik) {
+            AddChikView()
+        }
+        .fullScreenCover(isPresented: $isBatch) {
+            AddBatchView()
+        }
+        .fullScreenCover(isPresented: $isVacc) {
+            AddVaccinationView()
+        }
+        .fullScreenCover(isPresented: $isMed) {
+            AddInventoryView()
+        }
     }
 }

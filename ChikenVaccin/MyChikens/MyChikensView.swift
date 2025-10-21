@@ -3,9 +3,34 @@ import SwiftUI
 struct MyChikensView: View {
     @StateObject var myChikensModel =  MyChikensViewModel()
     @State private var showMenu = false
+    @State private var menusShown = [UUID: Bool]()
+    
+    func lastEggFormatted(from dateString: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM.dd.yyyy"
+        
+        guard let date = formatter.date(from: dateString) else {
+            return dateString
+        }
+        
+        let calendar = Calendar.current
+        let startOfToday = calendar.startOfDay(for: Date())
+        let startOfEggDate = calendar.startOfDay(for: date)
+        
+        let components = calendar.dateComponents([.day], from: startOfEggDate, to: startOfToday)
+        let days = components.day ?? 0
+        
+        if days == 0 {
+            return "Today"
+        } else {
+            return "\(days) days ago"
+        }
+    }
+    
+    
     var body: some View {
         ZStack {
-            if 1 != 1 {
+            if myChikensModel.chicks.isEmpty {
                 LinearGradient(colors: [Color(red: 231/255, green: 211/255, blue: 195/255),
                                         Color(red: 235/255, green: 200/255, blue: 173/255)], startPoint: .top, endPoint: .bottom).ignoresSafeArea()
             } else {
@@ -33,7 +58,7 @@ struct MyChikensView: View {
                 .padding(.top)
                 
                 
-                if 1 != 1 {
+                if myChikensModel.chicks.isEmpty {
                     Spacer()
                     
                     VStack(spacing: 23) {
@@ -52,7 +77,7 @@ struct MyChikensView: View {
                 } else {
                     ScrollView(showsIndicators: false) {
                         VStack(spacing: 15) {
-                            ForEach(0..<3, id: \.self) { index in
+                            ForEach(myChikensModel.chicks, id: \.id) { chick in
                                 ZStack(alignment: .topTrailing) {
                                     Rectangle()
                                         .fill(LinearGradient(colors: [Color(red: 243/255, green: 230/255, blue: 217/255),
@@ -61,7 +86,7 @@ struct MyChikensView: View {
                                         .overlay {
                                             VStack {
                                                 HStack {
-                                                    Image("chikType\(index + 1)")
+                                                    Image(chick.image)
                                                         .resizable()
                                                         .frame(width: 30, height: 40)
                                                         .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
@@ -69,26 +94,25 @@ struct MyChikensView: View {
                                                         .cornerRadius(8)
                                                     
                                                     VStack(alignment: .leading) {
-                                                        Text("Clucky")
+                                                        Text(chick.name)
                                                             .FontRegular(size: 18)
-                                                        
-                                                        Text("Leghorn")
-                                                            .FontRegular(size: 14)
                                                     }
                                                     .padding(.leading, 5)
                                                     
                                                     Spacer()
                                                     
-                                                    Text(1 == 1 ? "Healhty" : "Needs attention")
+                                                    Text(chick.isHealthy ? "Healthy" : "Needs attention")
                                                         .FontRegular(size: 12, color: .white)
                                                         .padding(EdgeInsets(top: 3, leading: 25, bottom: 3, trailing: 25))
-                                                        .background(1 == 1 ? Color(red: 155/255, green: 207/255, blue: 57/255) : Color(red: 233/255, green: 145/255, blue: 79/255))
+                                                        .background(chick.isHealthy ? Color(red: 155/255, green: 207/255, blue: 57/255) : Color(red: 233/255, green: 145/255, blue: 79/255))
                                                         .cornerRadius(18)
                                                         .padding(.trailing, 10)
+                                                        .lineLimit(1)
+                                                        .minimumScaleFactor(0.6)
                                                     
                                                     Button(action: {
                                                         withAnimation {
-                                                            showMenu.toggle()
+                                                            menusShown[chick.id] = !(menusShown[chick.id] ?? false)
                                                         }
                                                     }) {
                                                         Image("edit")
@@ -110,7 +134,7 @@ struct MyChikensView: View {
                                                                             .FontRegular(size: 10, color: Color(red: 95/255, green: 132/255, blue: 24/255))
                                                                         
                                                                         VStack(spacing: -8) {
-                                                                            Text("28")
+                                                                            Text("\(chick.ageInWeek)")
                                                                                 .FontExtraBold(size: 24)
                                                                             
                                                                             Text("weeks")
@@ -138,7 +162,7 @@ struct MyChikensView: View {
                                                                             .FontRegular(size: 10, color: Color(red: 95/255, green: 132/255, blue: 24/255))
                                                                         
                                                                         VStack(spacing: -8) {
-                                                                            Text("142")
+                                                                            Text("\(chick.eggsThisWeek)")
                                                                                 .FontExtraBold(size: 24)
                                                                             
                                                                             Text("weeks")
@@ -170,7 +194,7 @@ struct MyChikensView: View {
                                                                             .FontRegular(size: 10, color: Color(red: 95/255, green: 132/255, blue: 24/255))
                                                                         
                                                                         VStack(spacing: -8) {
-                                                                            Text("5")
+                                                                            Text("\(chick.eggsThisWeek)")
                                                                                 .FontExtraBold(size: 24)
                                                                             
                                                                             Text("eggs")
@@ -189,17 +213,18 @@ struct MyChikensView: View {
                                                         }
                                                         
                                                         Rectangle()
-                                                            .fill(LinearGradient(colors: [Color(red: 210/255, green: 213/255, blue: 157/255),
-                                                                                          Color(red: 204/255, green: 206/255, blue: 156/255),
-                                                                                          Color(red: 193/255, green: 198/255, blue: 137/255)], startPoint: .top, endPoint: .bottom))
+                                                            .fill(chick.isHealthy ? LinearGradient(colors: [Color(red: 210/255, green: 213/255, blue: 157/255),
+                                                                                                            Color(red: 204/255, green: 206/255, blue: 156/255),
+                                                                                                            Color(red: 193/255, green: 198/255, blue: 137/255)], startPoint: .top, endPoint: .bottom) : LinearGradient(colors: [Color(red: 220/255, green: 189/255, blue: 157/255),
+                                                                                                                                                                                                                                Color(red: 205/255, green: 164/255, blue: 138/255)], startPoint: .top, endPoint: .bottom))
                                                             .overlay {
                                                                 VStack(spacing: 0) {
                                                                     Text("Last Egg")
-                                                                        .FontRegular(size: 10, color: Color(red: 95/255, green: 132/255, blue: 24/255))
+                                                                        .FontRegular(size: 10, color: chick.isHealthy ? Color(red: 95/255, green: 132/255, blue: 24/255) : Color(red: 159/255, green: 61/255, blue: 0/255))
                                                                     
                                                                     VStack(spacing: -8) {
-                                                                        Text("Today")
-                                                                            .FontExtraBold(size: 24)
+                                                                        Text(lastEggFormatted(from: chick.lastEgg))
+                                                                            .FontExtraBold(size: 24, color: chick.isHealthy ? Color(red: 95/255, green: 132/255, blue: 24/255) : Color(red: 159/255, green: 61/255, blue: 0/255))
                                                                         
                                                                         Text("weeks")
                                                                             .FontLight(size: 14)
@@ -217,31 +242,24 @@ struct MyChikensView: View {
                                         .cornerRadius(15)
                                         .padding(.horizontal)
                                         .padding(.leading, 5)
-                                        .shadow(color: 1 == 1 ? Color(red: 155/255, green: 207/255, blue: 57/255) : Color(red: 233/255, green: 145/255, blue: 79/255), radius: 0, x: -5)
+                                        .shadow(color: chick.isHealthy ? Color(red: 155/255, green: 207/255, blue: 57/255) : Color(red: 233/255, green: 145/255, blue: 79/255), radius: 0, x: -5)
                                     
                                     Group {
-                                        if showMenu {
+                                        if menusShown[chick.id] == true {
                                             VStack(alignment: .trailing, spacing: 5) {
                                                 Button(action: {
-                                                    
-                                                }) {
-                                                    Text("Edit")
-                                                        .FontLight(size: 12)
-                                                }
-                                                
-                                                Rectangle()
-                                                    .fill(Color(red: 204/255, green: 188/255, blue: 174/255))
-                                                    .frame(height: 1)
-                                                    .cornerRadius(2)
-                                                
-                                                Button(action: {
-                                                    
+                                                    withAnimation {
+                                                        UserDefaultsManager().deleteChick(chick)
+                                                        myChikensModel.loadChicks()
+                                                    }
                                                 }) {
                                                     Text("Delete")
                                                         .FontLight(size: 12)
+                                                    
                                                 }
+                                                .offset(y: 1)
                                             }
-                                            .padding(EdgeInsets(top: 8, leading: 10, bottom: 10, trailing: 10))
+                                            .padding(EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 10))
                                             .background(
                                                 Rectangle()
                                                     .fill(LinearGradient(
