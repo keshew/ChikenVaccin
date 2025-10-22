@@ -8,6 +8,7 @@ class ChikInfoViewModel: ObservableObject {
     @Published var isOn: Bool {
         didSet {
             UserDefaults.standard.set(isOn, forKey: "isOns")
+            NotificationCenter.default.post(name: Notification.Name("UserResourcesUpdated"), object: nil)
         }
     }
     @Published var isNotifOn: Bool {

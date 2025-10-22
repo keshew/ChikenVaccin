@@ -78,7 +78,7 @@ struct ChikVaccineView: View {
                                                         menusShown[chick.id] = !(menusShown[chick.id] ?? false)
                                                     }
                                                 }) {
-                                                    Image("edit")
+                                                    Image(UserDefaults.standard.bool(forKey: "isOns") ? "editDark" : "edit")
                                                         .resizable()
                                                         .frame(width: 6, height: 20)
                                                 }
@@ -132,23 +132,21 @@ struct ChikVaccineView: View {
                                                 }
                                             }) {
                                                 Text("Delete")
-                                                    .FontLight(size: 12)
-                                                
+                                                    .FontLight(size: 12, color: UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 51/255, green: 53/255, blue: 63/255) : Color(red: 126/255, green: 98/255, blue: 88/255))
                                             }
-                                            .offset(y: 1)
                                         }
-                                        .padding(EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 10))
+                                        .padding(EdgeInsets(top: 8, leading: 10, bottom: 10, trailing: 10))
                                         .background(
                                             Rectangle()
                                                 .fill(LinearGradient(
-                                                    colors: [Color(red: 243/255, green: 230/255, blue: 217/255),
-                                                             Color(red: 230/255, green: 210/255, blue: 192/255)],
+                                                    colors: UserDefaults.standard.bool(forKey: "isOns") ? [Color(red: 171/255, green: 181/255, blue: 210/255)] : [Color(red: 243/255, green: 230/255, blue: 217/255),
+                                                                                                                                                                  Color(red: 230/255, green: 210/255, blue: 192/255)],
                                                     startPoint: .top, endPoint: .bottom))
                                                 .cornerRadius(8)
                                                 .shadow(radius: 5, y: 3)
                                         )
                                         .frame(width: 80)
-                                        .offset(x: -50, y: 30)
+                                        .offset(x: -30, y: 40)
                                     }
                                 }
                             }

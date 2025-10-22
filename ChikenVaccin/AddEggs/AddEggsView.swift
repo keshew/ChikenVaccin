@@ -79,19 +79,19 @@ struct AddEggsView: View {
                                         }) {
                                             ZStack {
                                                 Rectangle()
-                                                    .fill(showDateDropdown ? (UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 188/255, green: 199/255, blue: 238/255) : Color(red: 230/255, green: 218/255, blue: 208/255)) : (UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 171/255, green: 181/255, blue: 210/255) : Color(red: 204/255, green: 188/255, blue: 174/255)))
+                                                    .fill(showDateDropdown ? (UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 179/255, green: 210/255, blue: 255/255) : Color(red: 230/255, green: 218/255, blue: 208/255)) : (UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 179/255, green: 210/255, blue: 255/255) : Color(red: 204/255, green: 188/255, blue: 174/255)))
                                                     .frame(height: 36)
                                                     .cornerRadius(8)
                                                 
                                                 HStack {
                                                     Text(lastEgg.isEmpty ? "" : lastEgg)
-                                                        .FontRegular(size: 16)
+                                                        .FontRegular(size: 16, color: UserDefaults.standard.bool(forKey: "isOns") ? Color.black : Color(red: 126/255, green: 98/255, blue: 88/255))
                                                         .offset(y: 2)
                                                         .foregroundColor(lastEgg.isEmpty ? Color.gray : Color.black)
                                                     
                                                     Spacer()
                                                     
-                                                    Image("pin")
+                                                    Image(UserDefaults.standard.bool(forKey: "isOns") ? "pinDark" : "pin")
                                                         .resizable()
                                                         .aspectRatio(contentMode: .fit)
                                                         .frame(width: 18, height: 15)
@@ -105,7 +105,7 @@ struct AddEggsView: View {
                                                 VStack(spacing: 0) {
                                                     ForEach(last8Dates, id: \.self) { date in
                                                         Text(date)
-                                                            .FontRegular(size: 16)
+                                                            .FontRegular(size: 16, color: UserDefaults.standard.bool(forKey: "isOns") ? Color.black : Color(red: 126/255, green: 98/255, blue: 88/255))
                                                             .onTapGesture {
                                                                 lastEgg = date
                                                                 showDateDropdown = false
@@ -118,7 +118,7 @@ struct AddEggsView: View {
                                             .frame(maxWidth: .infinity)
                                             .padding(.horizontal)
                                             .background(
-                                                Color(red: 204/255, green: 188/255, blue: 174/255)
+                                                Color(red: UserDefaults.standard.bool(forKey: "isOns") ? 179/255 : 204/255, green: UserDefaults.standard.bool(forKey: "isOns") ? 210/255 : 188/255, blue: UserDefaults.standard.bool(forKey: "isOns") ? 255/255 : 174/255)
                                                     .clipShape(
                                                         RoundedCorners(radius: 8, corners: [.bottomLeft, .bottomRight])
                                                     )
@@ -143,19 +143,19 @@ struct AddEggsView: View {
                                         }) {
                                             ZStack {
                                                 Rectangle()
-                                                    .fill(showChikDropdown ? (UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 188/255, green: 199/255, blue: 238/255) : Color(red: 230/255, green: 218/255, blue: 208/255)) : (UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 171/255, green: 181/255, blue: 210/255) : Color(red: 204/255, green: 188/255, blue: 174/255)))
+                                                    .fill(showChikDropdown ? (UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 179/255, green: 210/255, blue: 255/255) : Color(red: 230/255, green: 218/255, blue: 208/255)) : (UserDefaults.standard.bool(forKey: "isOns") ? Color(red: 179/255, green: 210/255, blue: 255/255) : Color(red: 204/255, green: 188/255, blue: 174/255)))
                                                     .frame(height: 36)
                                                     .cornerRadius(8)
                                                 
                                                 HStack {
                                                     Text(chiken.isEmpty ? "" : chiken)
-                                                        .FontRegular(size: 16)
+                                                        .FontRegular(size: 16, color: UserDefaults.standard.bool(forKey: "isOns") ? Color.black : Color(red: 126/255, green: 98/255, blue: 88/255))
                                                         .offset(y: 2)
                                                         .foregroundColor(chiken.isEmpty ? Color.gray : Color.black)
                                                     
                                                     Spacer()
                                                     
-                                                    Image("pin")
+                                                    Image(UserDefaults.standard.bool(forKey: "isOns") ? "pinDark" : "pin")
                                                         .resizable()
                                                         .aspectRatio(contentMode: .fit)
                                                         .frame(width: 18, height: 15)
@@ -169,7 +169,7 @@ struct AddEggsView: View {
                                                 VStack(alignment: .leading, spacing: 0) {
                                                     ForEach(chikens, id: \.self) { date in
                                                         Text(date)
-                                                            .FontRegular(size: 16)
+                                                            .FontRegular(size: 16, color: UserDefaults.standard.bool(forKey: "isOns") ? Color.black : Color(red: 126/255, green: 98/255, blue: 88/255))
                                                             .onTapGesture {
                                                                 chiken = date
                                                                 showChikDropdown = false
@@ -182,7 +182,7 @@ struct AddEggsView: View {
                                             .frame(maxWidth: .infinity)
                                             .padding(.horizontal)
                                             .background(
-                                                Color(red: 204/255, green: 188/255, blue: 174/255)
+                                                Color(red: UserDefaults.standard.bool(forKey: "isOns") ? 179/255 : 204/255, green: UserDefaults.standard.bool(forKey: "isOns") ? 210/255 : 188/255, blue: UserDefaults.standard.bool(forKey: "isOns") ? 255/255 : 174/255)
                                                     .clipShape(
                                                         RoundedCorners(radius: 8, corners: [.bottomLeft, .bottomRight])
                                                     )
