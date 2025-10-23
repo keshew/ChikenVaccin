@@ -169,7 +169,7 @@ struct TabBarItem: View {
                                 Spacer()
                                 
                                 Text("Eggs")
-                                    .FontLight(size: 12)
+                                    .FontLight(size: UIScreen.main.bounds.width > 700 ? 14 : 12)
                             }
                         }
                         
@@ -189,7 +189,7 @@ struct TabBarItem: View {
                                 Spacer()
                                 
                                 Text("Task")
-                                    .FontLight(size: 12)
+                                    .FontLight(size: UIScreen.main.bounds.width > 700 ? 14 : 12)
                             }
                         }
                         
@@ -209,7 +209,7 @@ struct TabBarItem: View {
                                 Spacer()
                                 
                                 Text("Chiken")
-                                    .FontLight(size: 12)
+                                    .FontLight(size: UIScreen.main.bounds.width > 700 ? 14 : 12)
                             }
                         }
                         
@@ -229,7 +229,7 @@ struct TabBarItem: View {
                                 Spacer()
                                 
                                 Text("Batch")
-                                    .FontLight(size: 12)
+                                    .FontLight(size: UIScreen.main.bounds.width > 700 ? 14 : 12)
                             }
                         }
                         
@@ -244,12 +244,12 @@ struct TabBarItem: View {
                             HStack(spacing: 0) {
                                 Image(isOns ? "ukol" : "vaccination")
                                     .resizable()
-                                    .frame(width: 12, height: 16)
+                                    .frame(width: UIScreen.main.bounds.width > 700 ? 16 : 12, height: 16)
                                 
                                 Spacer()
                                 
                                 Text("Vaccination")
-                                    .FontLight(size: 8)
+                                    .FontLight(size: UIScreen.main.bounds.width > 700 ? 14 : 8)
                             }
                         }
                         
@@ -269,7 +269,7 @@ struct TabBarItem: View {
                                 Spacer()
                                 
                                 Text("Medicine")
-                                    .FontLight(size: 10)
+                                    .FontLight(size: UIScreen.main.bounds.width > 700 ? 14 : 10)
                             }
                         }
                         
@@ -289,8 +289,8 @@ struct TabBarItem: View {
                             .cornerRadius(8)
                             .shadow(radius: 5, y: 3)
                     )
-                    .frame(width: 80)
-                    .offset(x: -20, y: -140)
+                    .frame(width: UIScreen.main.bounds.width > 700 ? 120 : 80)
+                    .offset(x: -20, y: UIScreen.main.bounds.width > 700 ? -160 : -140)
                 }
             }
         }
