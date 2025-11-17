@@ -95,7 +95,7 @@ struct ChikInfoView: View {
                                         Text("\(chikInfoModel.totalChicks)")
                                             .FontExtraBold(size: 40)
                                         
-                                        Text("Total Chickens")
+                                        Text("Total Ducks")
                                             .FontRegular(size: 12)
                                     }
                                 }
@@ -419,7 +419,7 @@ struct TwoRingProgressView: View {
                 .frame(width: 200, height: 200)
             
             VStack(spacing: 0) {
-                Image(.chikHappy)
+                Image(.duck)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 50, height: 70)

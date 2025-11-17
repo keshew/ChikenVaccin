@@ -144,10 +144,10 @@ struct AddChikView: View {
                         }
                         
                         VStack(spacing: 70) {
-                            Image(.chikHappy)
+                            Image(.addDuck)
                                 .resizable()
-                                .frame(width: 150, height: 220)
                                 .aspectRatio(contentMode: .fit)
+                                .frame(width: 180, height: 220)
                             
                             Button(action: {
                                 if !isNumeric(age) {

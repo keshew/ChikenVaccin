@@ -49,7 +49,7 @@ struct MyChikensView: View {
                 HStack {
                     Spacer()
                     
-                    Text("My Chickens")
+                    Text("My Ducks")
                         .FontLight(size: 20)
                         .offset(y: 2)
                 }
@@ -61,12 +61,12 @@ struct MyChikensView: View {
                     Spacer()
                     
                     VStack(spacing: 23) {
-                        Image(.chik)
+                        Image(.myduck)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 180, height: 280)
                         
-                        Text("Add your chickens here to always\nkeep track of the information.")
+                        Text("Add your ducks here to always\nkeep track of the information.")
                             .FontRegular(size: 14)
                             .multilineTextAlignment(.center)
                     }
